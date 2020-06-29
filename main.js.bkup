@@ -72,19 +72,20 @@ getFirstIpAddress(cidrStr, callback) {
   // data as the second argument to the callback function.
   // Create Object with IPV4 and IPV6 Properties and 
   // call helper function to return value.
-  let ipv6=null;
-  
-  if (firstIpAddress != null) {
-      ipv6 = getIpv4MappedIpv6Address(firstIpAddress);
+  let v6Helper;
+  v6Helper = getIpv4MappedIpv6Address(firstIpAddress);
+  object = {};
+  if (v6Helper == null) {
+      object.ipv4 = '\{\"ipv4\":' + firstIpAddress +'\"' ;
+      object.ipv6 = ',\"ipv6\":' + v6Helper + '\}';
+  } else {
+      object.ipv4 = '\{\"ipv4\":\"' + firstIpAddress + '\"';
+      object.ipv6 = ',\"ipv6\":\"' + v6Helper + '\"\}';
   }
-  
-  const object = {
-      ipv4: firstIpAddress,
-      ipv6: ipv6
-  };
-
+  }
   return callback(object, callbackError);
 }
+
 }
 
 module.exports = new IpAddress;
